@@ -49,7 +49,7 @@ function DPTable({ dp, string, cellChanged }) {
                                     (cell ? "value-true" : "value-false") +
                                     (rowIndex === rowChanged && cellIndex === columnChanged ? " value-changed" : "") +
                                     (cellIndex === columnChanged ? " column-changed" : "")
-                                } key={cellIndex}></td>)
+                                } key={cellIndex}>{cell ? '1' : '0'}</td>)
                             })}
                         </tr>
                     ))}
@@ -58,5 +58,5 @@ function DPTable({ dp, string, cellChanged }) {
         </div>
     );
 }
-// {cell ? 'true' : 'false'}
+// 
 export default DPTable;

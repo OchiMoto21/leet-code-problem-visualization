@@ -128,7 +128,7 @@ main > .breakout {
 
 
 .text-block {
-    text-align: left;
+    /* text-align: left; */
     /* height: 100%; */
     padding: 0 1rem 0 1rem;
     /* margin */
