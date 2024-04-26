@@ -1,0 +1,208 @@
+:root {
+    --step-border-radius: 0.5rem;
+    --border-color: rgba(86, 86, 86, 1);
+    --section-background-color: rgb(29, 29, 30);
+}
+
+main {
+	display: grid;
+	/* width: 100vw; */
+	grid-template-columns:
+		[full-width-start] 
+		
+		minmax(2rem, 1fr)
+		
+		[break-out-start] 
+		
+		minmax(0, 100px)
+		
+		[content-start] 
+		
+		min(calc(100% - 4rem), 900px) 
+		
+		[content-end]
+		
+		minmax(0, 100px)
+    	
+		[break-out-end] 
+		
+		minmax(2rem, 1fr)
+		
+		[full-width-end];
+
+	position: relative;
+}
+
+main > * {
+	grid-column: content;
+}
+
+main > .full-width {
+	grid-column: full-width;
+}
+
+
+main > .breakout {
+	grid-column: break-out;
+}
+
+.flow > * {
+	margin-top: 4rem;
+	margin-bottom: 4rem;
+}
+
+.matrix-wrapper {
+    display: inline-block;
+    /* width: 100%; */
+    /* overflow: hidden; */
+}
+
+.step-title {
+    /* padding: 1rem; */
+    text-align: left;
+    /* display: grid; */
+    /* grid-template-columns: 1fr auto auto auto; */
+    /* column-gap: 0.5rem; */
+    position:sticky;
+    top: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    backdrop-filter: blur(6px);
+    z-index: 2;
+
+    
+}
+
+.step-title h2{
+    border-bottom: var(--border-color) 1px solid;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.step-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    row-gap: 1rem;
+    border-radius: var(--step-border-radius);
+    column-gap: 1rem;
+    margin-bottom: 1.5rem;
+    /* margin-bottom: 1rem; */
+
+}
+
+.header {
+    display: flex;
+    justify-content: left;
+    background-color: rgb(45, 45, 50);
+    /* text-align: center; */
+    /* position: relative; */
+    /* margin:0; */
+    /* padding:0.25rem; */
+    border-radius: 0.5rem 0.5rem 0 0;
+    /* border-bottom: var(--border-color) 1px solid; */
+    position: relative;
+    padding: 0 1rem 0 1rem;
+}
+
+/* .step-container .header::before {
+    content: '';
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    bottom: 0%;
+    left: 0;
+    background:var(--border-color);
+
+} */
+.header h3{
+    /* background-color: rgb(45, 45, 50); */
+    /* text-align: center; */
+    /* position: relative; */
+    margin: 0.75rem 0 0.5rem 0;
+    /* padding:0.25rem; */
+    /* border-radius: 0.5rem 0.5rem 0 0; */
+    /* border-bottom: var(--border-color) 1px solid; */
+}
+
+
+
+.text-block {
+    text-align: left;
+    /* height: 100%; */
+    padding: 0 1rem 0 1rem;
+    /* margin */
+}
+
+.step-matrix {
+    grid-column: 1;
+    grid-row: 1/ span 2;
+    /* border: var(--border-color) 1px solid; */
+    border-radius: var(--step-border-radius);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--section-background-color);
+}
+
+.step-explanation {
+    grid-column: 2;
+    grid-row: 1;
+    border-radius: var(--step-border-radius);
+    /* border: var(--border-color) 1px solid; */
+    display: flex;
+    flex-direction: column;
+    background-color: var(--section-background-color);
+
+}
+
+.step-answer {
+    grid-column: 2;
+    grid-row: 2;
+    border-radius: var(--step-border-radius);
+    /* border: var(--border-color) 1px solid; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--section-background-color);
+}
+
+input[type=text] {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: var(--border-color) 1px solid;
+    background-color: rgba(31, 31, 31, 0.5);
+    color:white;
+    outline: none;
+    font-family: "Rubik", sans-serif;
+    /* width: 100%; */
+
+}
+
+input[type=text]:focus {
+    border: rgb(239, 239, 239) 1px solid;
+    background-color: rgba(31, 31, 31, 0.5);
+    
+}
+
+
+@media (max-width: 800px) {
+    .step-container {
+      grid-template-columns: 1fr; /* Change to single column layout */
+    }
+    
+    .step-matrix {
+      grid-column: 1;
+      grid-row: 1;
+      width: auto; /* Reset width */
+    }
+    
+    .step-explanation {
+      grid-column: 1;
+      grid-row: 2;
+    }
+    
+    .step-answer {
+      grid-column: 1;
+      grid-row: 3;
+    }
+  }
