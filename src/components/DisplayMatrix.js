@@ -6,7 +6,7 @@ function DPTable({ dp, string, cellChanged }) {
 
   const [rowChanged, columnChanged] = cellChanged;
 
-  const index_array = GenerateTableHeader(string, columnChanged);
+  const index_array = GenerateTableHeader({string, columnChanged});
   return (
     <div className="table-wrapper">
       <table>
