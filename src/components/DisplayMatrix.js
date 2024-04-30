@@ -1,35 +1,17 @@
 import "./DisplayMatrix.css";
 
-function DPTable({ dp, string, cellChanged }) {
+function DPTable({dp, string, cellChanged}) {
   // if (input.length === 0 && dp === undefined) return;
   const input = string.split("");
 
   const [rowChanged, columnChanged] = cellChanged;
 
-  const index_array = GenerateTableHeader({string, columnChanged});
   return (
     <div className="table-wrapper">
       <table>
         <tbody>
-          <tr>{index_array}</tr>
-
-          <tr>
-            <td className="table-header">
-              <code>i</code>
-            </td>
-            <td className="table-header"></td>
-            {input.map((cell, cellIndex) => (
-              <td
-                key={cell + cellIndex}
-                className={
-                  "table-header" +
-                  (cellIndex === columnChanged ? " column-changed" : "")
-                }
-              >
-                <p>{cell}</p>
-              </td>
-            ))}
-          </tr>
+          <GenerateIndexTableHeader input={input} columnChanged={columnChanged} />
+          <GenerateCharTableHeader input={input} columnChanged={columnChanged} />
           {dp.map((row, rowIndex) => (
             <tr
               key={rowIndex}
@@ -75,8 +57,9 @@ function DPTable({ dp, string, cellChanged }) {
     </div>
   );
 }
-function GenerateTableHeader({ string, columnChanged }) {
-  const input = string.split("");
+
+function GenerateIndexTableHeader({input, columnChanged}) {
+
   const index_array = [];
   index_array.push(
     <td key={"Column Header " + -2} className="table-header"></td>
@@ -99,7 +82,28 @@ function GenerateTableHeader({ string, columnChanged }) {
       </td>
     );
   }
-  return index_array;
+
+  return <tr>{index_array}</tr>;
 }
-//
+
+function GenerateCharTableHeader({input, columnChanged}) {
+
+  return (
+    <tr>
+      <td className="table-header">
+        <code>i</code>
+      </td>
+      <td className="table-header"></td>
+      {input.map((cell, cellIndex) => (
+        <td
+          key={cell + cellIndex}
+          className={"table-header" + (cellIndex === columnChanged ? " column-changed" : "")}>
+          <p>{cell}</p>
+        </td>
+      ))}
+    </tr>
+  )
+
+}
 export default DPTable;
+
