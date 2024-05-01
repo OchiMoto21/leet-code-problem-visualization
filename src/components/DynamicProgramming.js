@@ -74,7 +74,7 @@ class DynamicProgramming extends Component {
       if (Object.keys(matricesObject).length === 0) return "";
 
       return (
-        <div key={step + "[" + index + "]"}>
+        <div key={step + "[" + index + "]"} style={{marginBottom: "3rem"}}>
           <div className='step-title'>
             <h2>{step}</h2>
           </div>
@@ -320,7 +320,7 @@ class DynamicProgramming extends Component {
             </div>
           </div>
         ) : (
-          <div className='matrix-wrapper'>
+          <div className='matrix-wrapper' style={{marginBottom: "3rem"}}>
             {this.renderDPElements()}
           </div>
         )}
