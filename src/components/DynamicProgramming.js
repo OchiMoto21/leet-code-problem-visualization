@@ -2,9 +2,6 @@ import {Component} from 'react';
 import DPTable from './DisplayMatrix';
 import './DynamicProgramming.css'
 
-function clone(arr) {
-  return JSON.parse(JSON.stringify(arr))
-}
 
 class DynamicProgramming extends Component {
   constructor(props) {
@@ -66,76 +63,6 @@ class DynamicProgramming extends Component {
     }
   }
 
-  renderDPElements() {
-    const {value, stepMatrices} = this.state;
-    const answer_style = {borderBottom: "var(--border-color) 1px solid", margin: 0, padding: "0.5rem", minHeight: "2.25rem"};
-
-    return Object.entries(stepMatrices).map(([step, matricesObject], index) => {
-      if (Object.keys(matricesObject).length === 0) return "";
-
-      return (
-        <div key={step + "[" + index + "]"} style={{marginBottom: "3rem"}}>
-          <div className='step-title'>
-            <h2>{step}</h2>
-          </div>
-          {Object.entries(matricesObject).map(([matrixKey, matrix], matricesIndex) => (
-            <div key={matrixKey} className={("Final Answer" === step ? "" : 'step-container')} >
-              {
-                matrix.hasOwnProperty("Matrices") &&
-                <div className='step-matrix'>
-                  <div className='header'>
-                    <h3>Dynamic Programming Matrix</h3>
-                  </div>
-                  <DPTable dp={matrix["Matrices"]} string={value} cellChanged={matrixKey.split(" ").map(char => parseInt(char, 10))} />
-                </div>
-              }
-              {
-                matrix.hasOwnProperty("Explanation") &&
-                <div className='step-explanation'>
-                  <div className='header'>
-                    <h3>Explanation</h3>
-                  </div>
-                  <div className='text-block'>
-                    {matrix["Explanation"]}
-                  </div>
-                </div>
-              }
-
-              < div className='step-answer' >
-                <div className='header'>
-                  <h3>Current Answer</h3>
-                </div>
-                <div className='table-wrapper' style={{minHeight: "8rem"}}>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <h4 style={answer_style}><code>char</code></h4>
-
-                          <h4 style={answer_style}><code>index</code></h4>
-                        </td>
-                        {value.slice(matrix["Answer"][0], matrix["Answer"][1] + 1).split("").map((char, charIndex) => {
-
-                          return (
-                            <td key={char + charIndex}>
-                              <h4 style={answer_style}>{char}</h4>
-
-                              <h4 style={answer_style}>{matrix["Answer"][0] + charIndex}</h4>
-                            </td>
-                          )
-                        })}
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div >
-          ))
-          }
-        </div>)
-
-    })
-  }
 
   generateDPElements() {
     const {value} = this.state;
@@ -298,7 +225,7 @@ class DynamicProgramming extends Component {
 
 
   render() {
-    const {value, showWarning} = this.state;
+    const {value, stepMatrices, showWarning} = this.state;
     return (
       <main>
         <h2>Dynamic Programming Approach</h2>
@@ -308,7 +235,9 @@ class DynamicProgramming extends Component {
             <code style={{padding: "1rem"}}>string</code>&#160;
           </label>
           <input type="text" value={value} onChange={this.handleChange} onSubmit={this.handleChange} placeholder="Enter string to test..." />
-          {showWarning && <p style={{color: "rgb(255, 73, 73)", textAlign: 'center'}}>I limit the string length to be 12 as I still struggle to render tables help :D</p>}
+          {showWarning && <p style={{color: "rgb(255, 73, 73)", textAlign: 'center'}}>
+            I limit the string length to be 12 as I still struggle to render tables help :D
+          </p>}
         </form>
         {value.length === 0 ? (
           <div style={{paddingTop: "1rem", paddingBottom: "1rem", marginTop: "1rem", marginBottom: "1rem"}}>
@@ -321,7 +250,7 @@ class DynamicProgramming extends Component {
           </div>
         ) : (
           <div className='matrix-wrapper' style={{marginBottom: "3rem"}}>
-            {this.renderDPElements()}
+            <Steps value={value} stepMatrices={stepMatrices} />
           </div>
         )}
 
@@ -329,6 +258,79 @@ class DynamicProgramming extends Component {
     )
   }
 
+}
+
+function Steps({value, stepMatrices}) {
+  const answer_style = {borderBottom: "var(--border-color) 1px solid", margin: 0, padding: "0.5rem", minHeight: "2.25rem"};
+
+  return Object.entries(stepMatrices).map(([step, matricesObject], index) => {
+    if (Object.keys(matricesObject).length === 0) return "";
+
+    return (
+      <div key={step + "[" + index + "]"} style={{marginBottom: "3rem"}}>
+        <div className='step-title'>
+          <h2>{step}</h2>
+        </div>
+        {Object.entries(matricesObject).map(([matrixKey, matrix], matricesIndex) => (
+          <div key={matrixKey} className={("Final Answer" === step ? "" : 'step-container')} >
+            {
+              matrix.hasOwnProperty("Matrices") &&
+              <div className='step-matrix'>
+                <div className='header'>
+                  <h3>Dynamic Programming Matrix</h3>
+                </div>
+                <DPTable dp={matrix["Matrices"]} string={value} cellChanged={matrixKey.split(" ").map(char => parseInt(char, 10))} />
+              </div>
+            }
+            {
+              matrix.hasOwnProperty("Explanation") &&
+              <div className='step-explanation'>
+                <div className='header'>
+                  <h3>Explanation</h3>
+                </div>
+                <div className='text-block'>
+                  {matrix["Explanation"]}
+                </div>
+              </div>
+            }
+
+            < div className='step-answer' >
+              <div className='header'>
+                <h3>Current Answer</h3>
+              </div>
+              <div className='table-wrapper' style={{minHeight: "8rem"}}>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <h4 style={answer_style}><code>char</code></h4>
+
+                        <h4 style={answer_style}><code>index</code></h4>
+                      </td>
+                      {value.slice(matrix["Answer"][0], matrix["Answer"][1] + 1).split("").map((char, charIndex) => {
+                        return (
+                          <td key={char + charIndex}>
+                            <h4 style={answer_style}>{char}</h4>
+
+                            <h4 style={answer_style}>{matrix["Answer"][0] + charIndex}</h4>
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div >
+        ))
+        }
+      </div>)
+
+  })
+}
+
+function clone(arr) {
+  return JSON.parse(JSON.stringify(arr))
 }
 
 export default DynamicProgramming;
