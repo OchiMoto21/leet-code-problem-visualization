@@ -1,3 +1,12 @@
+:root {
+    --value-true-color: rgb(124, 213, 56);
+    --value-true-background-color: rgba(66, 115, 43, 0.5);
+    --value-false-color:rgb(242, 95, 95);
+    --value-false-background-color:rgba(99, 36, 36, 0.5);
+    --value-updated-color:rgb(255, 255, 255);
+    --value-updated-background-color:rgba(43, 72, 115, 1);
+
+}
 .table-wrapper {
     /* height: calc(100% - calc(calc(1.2*1.17rem) + var(--double-header-margin))); */
     flex-grow: 1;
@@ -43,24 +52,24 @@
 }
 
 .value-true {
-    background-color: rgba(66, 115, 43, 0.5);
+    background-color: var(--value-true-background-color);
     font-weight: bold;
     /* border: rgba(111, 131, 96, 1) 1px solid; */
-    color: rgb(124, 213, 56)
+    color: var(--value-true-color);
 }
 
 .value-false {
-    background-color: rgba(99, 36, 36, 0.5);
+    background-color: var(--value-false-background-color);
     font-weight: lighter;
     /* border: rgba(131, 96, 96, 1) 1px solid; */
-    color: rgb(242, 95, 95);
+    color: var(--value-false-color);
 }
 
-.value-changed {
-    background-color: rgba(43, 72, 115, 1);
+.value-updated {
+    background-color: var(--value-updated-background-color);
     font-weight: bolder;
     /* border: rgba(96, 106, 131, 1) 1px solid; */
-    color: rgb(255, 255, 255);
+    color: var(--value-updated-color);
 }
 
 .column-changed {

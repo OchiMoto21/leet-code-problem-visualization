@@ -9,9 +9,11 @@ class DynamicProgramming extends Component {
     this.state = {
       value: "",
       stepMatrices: {
+        "Step 0": {},
         "Step 1": {},
         "Step 2": {},
-        "Step 3": {}
+        "Step 3": {},
+        "Final Answer": {}
       },
       // stepMatrices data structure
       // stepMatrices: {
@@ -33,8 +35,6 @@ class DynamicProgramming extends Component {
 
 
     this.handleChange = this.handleChange.bind(this)
-    this.renderDPElements = this.renderDPElements.bind(this)
-
   }
 
   handleChange(event) {
@@ -174,7 +174,7 @@ class DynamicProgramming extends Component {
 
               {(i === 0 && diff === 2) &&
                 <p>
-                  So, if a substring, for example, 'aa', is a palindrome, then adding the same character yields '[char]aa[char]', which remains a palindrome. By leveraging the results from the two previous steps for odd and even length palindromes, we can ascertain whether the outer boundary of each substring is also a palindrome. This allows us to determine the overall condition of the substring along with its boundary.
+                  So, if a substring, for example, 'aa', is a palindrome, then adding the same character yields '[char]aa[char]', which remains a palindrome. By using the results from the two previous steps for odd and even length palindromes, we can ascertain whether the outer boundary of each substring is also a palindrome. This allows us to determine the overall condition of the substring along with its boundary.
                 </p>
               }
 
@@ -188,7 +188,7 @@ class DynamicProgramming extends Component {
                   value.charAt(i) === value.charAt(j) ? (
                     <span>
                       the character at <code>{i}</code> &#40;{value.charAt(i)}&#41; is equal to the character at <code>{j}</code> &#40;{value.charAt(j)}&#41; But, we can see from previous calculation (<code>matrix[{i + 1}][{j - 1}]</code>) that substring from <code>{i + 1}</code> ({value.charAt(i + 1)}) to <code>{j - 1}</code> ({value.charAt(j - 1)}) is not a palindrome, invalidating palindrome properties.
-                      Therefore, we set <code>matrix&#091;{i}&#093;&#091;{j}&#093;</code> equal to <code>false</code>.
+                      Therefore, we set <code>matrix[{i}&#093;&#091;{j}&#093;</code> equal to <code>false</code>.
                     </span>
                   ) : (
                     arr[i + 1][j - 1] ? (
@@ -261,68 +261,104 @@ class DynamicProgramming extends Component {
 }
 
 function Steps({value, stepMatrices}) {
+  /**
+  * This is needs to be refactored,
+  * 1. New CSS Module
+  * 2. Make layout automated according to the input
+  */
+
+  const stepToAnchor = (step) => {
+    console.log("Input :", step)
+    const regex = /^Step (\d+)$/;
+    const match = step.match(regex)
+    console.log(match)
+    if (match) {
+      const number = parseInt(match[1]);
+      if (number - 1 < 0) return ["", "Step " + (number + 1)]
+      if (number + 1 > 3) return ["Step " + (number - 1), "Final Answer"]
+      return ["Step " + (number - 1), "Step " + (number + 1)]
+    }
+    return ["Step 3", ""]
+  }
+
   const answer_style = {borderBottom: "var(--border-color) 1px solid", margin: 0, padding: "0.5rem", minHeight: "2.25rem"};
 
   return Object.entries(stepMatrices).map(([step, matricesObject], index) => {
-    if (Object.keys(matricesObject).length === 0) return "";
 
     return (
-      <div key={step + "[" + index + "]"} style={{marginBottom: "3rem"}}>
+      <div key={step + "[" + index + "]"} style={{marginBottom: "3rem"}} id={step}>
         <div className='step-title'>
           <h2>{step}</h2>
+
+          <a href={"#" + stepToAnchor(step)[0]} className='prev-button'>
+
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.9783 5.31877L10.7683 8.52877L8.79828 10.4888C7.96828 11.3188 7.96828 12.6688 8.79828 13.4988L13.9783 18.6788C14.6583 19.3588 15.8183 18.8688 15.8183 17.9188V12.3088V6.07877C15.8183 5.11877 14.6583 4.63877 13.9783 5.31877Z" fill="#D4D4D4" />
+            </svg>
+          </a>
+
+          <a href={"#" + stepToAnchor(step)[1]} className='next-button'>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.1997 10.4919L13.2297 8.52188L10.0197 5.31188C9.33969 4.64188 8.17969 5.12188 8.17969 6.08188V12.3119V17.9219C8.17969 18.8819 9.33969 19.3619 10.0197 18.6819L15.1997 13.5019C16.0297 12.6819 16.0297 11.3219 15.1997 10.4919Z" fill="#D4D4D4" />
+            </svg>
+          </a>
+
         </div>
-        {Object.entries(matricesObject).map(([matrixKey, matrix], matricesIndex) => (
-          <div key={matrixKey} className={("Final Answer" === step ? "" : 'step-container')} >
-            {
-              matrix.hasOwnProperty("Matrices") &&
-              <div className='step-matrix'>
+        {
+          Object.entries(matricesObject).map(([matrixKey, matrix], matricesIndex) => (
+            <div key={matrixKey} className={("Final Answer" === step ? "" : 'step-container')} >
+              {
+                matrix.hasOwnProperty("Matrices") &&
+                <div className='step-matrix'>
+                  <div className='header'>
+                    <h3>Dynamic Programming Matrix</h3>
+                  </div>
+                  <DPTable dp={matrix["Matrices"]} string={value} cellChanged={matrixKey.split(" ").map(char => parseInt(char, 10))} />
+                </div>
+              }
+              {
+                matrix.hasOwnProperty("Explanation") &&
+                <div className='step-explanation'>
+                  <div className='header'>
+                    <h3>Explanation</h3>
+                  </div>
+                  <div className='text-block'>
+                    {matrix["Explanation"]}
+                  </div>
+                </div>
+              }
+
+              <div className='step-answer'>
                 <div className='header'>
-                  <h3>Dynamic Programming Matrix</h3>
+                  <h3>Current Answer</h3>
                 </div>
-                <DPTable dp={matrix["Matrices"]} string={value} cellChanged={matrixKey.split(" ").map(char => parseInt(char, 10))} />
-              </div>
-            }
-            {
-              matrix.hasOwnProperty("Explanation") &&
-              <div className='step-explanation'>
-                <div className='header'>
-                  <h3>Explanation</h3>
+                <div className='table-wrapper' style={{minHeight: "8rem"}}>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <h4 style={answer_style}><code>char</code></h4>
+
+                          <h4 style={answer_style}><code>index</code></h4>
+                        </td>
+                        {
+                          value.slice(matrix["Answer"][0], matrix["Answer"][1] + 1).split("").map((char, charIndex) => {
+                            return (
+                              <td key={char + charIndex}>
+                                <h4 style={answer_style}>{char}</h4>
+
+                                <h4 style={answer_style}>{matrix["Answer"][0] + charIndex}</h4>
+                              </td>
+                            )
+                          })
+                        }
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <div className='text-block'>
-                  {matrix["Explanation"]}
-                </div>
-              </div>
-            }
-
-            < div className='step-answer' >
-              <div className='header'>
-                <h3>Current Answer</h3>
-              </div>
-              <div className='table-wrapper' style={{minHeight: "8rem"}}>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <h4 style={answer_style}><code>char</code></h4>
-
-                        <h4 style={answer_style}><code>index</code></h4>
-                      </td>
-                      {value.slice(matrix["Answer"][0], matrix["Answer"][1] + 1).split("").map((char, charIndex) => {
-                        return (
-                          <td key={char + charIndex}>
-                            <h4 style={answer_style}>{char}</h4>
-
-                            <h4 style={answer_style}>{matrix["Answer"][0] + charIndex}</h4>
-                          </td>
-                        )
-                      })}
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             </div>
-          </div >
-        ))
+          ))
         }
       </div>)
 
