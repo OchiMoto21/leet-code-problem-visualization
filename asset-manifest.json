@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/leet-code-problem-visualization/static/css/main.8389bd11.css",
+    "main.css": "/leet-code-problem-visualization/static/css/main.f04211a5.css",
     "main.js": "/leet-code-problem-visualization/static/js/main.6b92de66.js",
     "static/js/453.2a82e7ac.chunk.js": "/leet-code-problem-visualization/static/js/453.2a82e7ac.chunk.js",
     "index.html": "/leet-code-problem-visualization/index.html",
-    "main.8389bd11.css.map": "/leet-code-problem-visualization/static/css/main.8389bd11.css.map",
+    "main.f04211a5.css.map": "/leet-code-problem-visualization/static/css/main.f04211a5.css.map",
     "main.6b92de66.js.map": "/leet-code-problem-visualization/static/js/main.6b92de66.js.map",
     "453.2a82e7ac.chunk.js.map": "/leet-code-problem-visualization/static/js/453.2a82e7ac.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8389bd11.css",
+    "static/css/main.f04211a5.css",
     "static/js/main.6b92de66.js"
   ]
 }
