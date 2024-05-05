@@ -14,19 +14,6 @@ class DynamicProgramming extends Component {
         "step": [],
         "finalAnswer": [],
       },
-      // stepMatrices data structure
-      // stepMatrices: {
-      //     'Step 1': {
-      //         "-1 -1": {
-      //             "Matrices": {},
-      //             "Explanation": {},
-      //             "Answer": {}
-      //         }
-      //     },
-      //     "Final Answer": {
-      //         "Answer": {}
-      //     },
-      // },
       showWarning: false
 
     };
@@ -183,7 +170,7 @@ class DynamicProgramming extends Component {
               <p> In this part,&#160;
                 <span>
                   the character at <code>{i}</code> &#40;{value.charAt(i)}&#41; is{value.charAt(i) === value.charAt(j) ? " " : " not "}equal to the character at <code>{j}</code> &#40;{value.charAt(j)}&#41; and we can see from previous calculation (<code>matrix[{i + 1}][{j - 1}]</code>) that substring from <code>{i + 1}</code> ({value.charAt(i + 1)}) to <code>{j - 1}</code> ({value.charAt(j - 1)}) is {arr[i + 1][j - 1] ? " " : "not "}a palindrome.
-                  {!arr[i][j] && value.charAt(i) !== value.charAt(j) ? " Although the inside of this substring is a palindrome, the boundary is not palindrome. " : " "}Therefore, we set <code>matrix&#091;{i}&#093;&#091;{j}&#093;</code> equal to {arr[i][j] ? <code>true</code> : <code>false</code>}
+                  {(!arr[i][j] && value.charAt(i) !== value.charAt(j) && arr[i + 1][j - 1]) ? " Although the inside of this substring is a palindrome, the boundary is not palindrome. " : " "}Therefore, we set <code>matrix&#091;{i}&#093;&#091;{j}&#093;</code> equal to {arr[i][j] ? <code>true</code> : <code>false</code>}
                 </span>
               </p>
             </div>
