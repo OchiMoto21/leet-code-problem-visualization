@@ -74,3 +74,16 @@ p {
 	text-align: justify;
 	font-weight: 300;
 }
+::-webkit-scrollbar {
+    width: 0.5rem;
+    height:0.5rem;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 1rem;
+}
+::-webkit-scrollbar-thumb {
+    background: #2D2D32;
+    border-radius: 0.5rem; 
+}

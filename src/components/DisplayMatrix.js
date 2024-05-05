@@ -1,26 +1,25 @@
 import "./DisplayMatrix.css";
 
-function DPTable({dp, string, cellChanged}) {
+function DPTable({dp, string, cellUpdated}) {
   // if (input.length === 0 && dp === undefined) return;
   const input = string.split("");
 
-  const [rowChanged, columnChanged] = cellChanged;
-
+  const [rowUpdated, columnUpdated] = cellUpdated;
   return (
     <div className="table-wrapper">
       <table>
         <tbody>
-          <GenerateIndexTableHeader input={input} columnChanged={columnChanged} />
-          <GenerateCharTableHeader input={input} columnChanged={columnChanged} />
+          <GenerateIndexTableHeader input={input} columnUpdated={columnUpdated} />
+          <GenerateCharTableHeader input={input} columnUpdated={columnUpdated} />
           {dp.map((row, rowIndex) => (
             <tr
               key={rowIndex}
-              className={rowIndex === rowChanged ? "row-changed" : ""}
+              className={rowIndex === rowUpdated ? "row-updated" : ""}
             >
               <td
                 className={
                   "table-header" +
-                  (rowIndex === rowChanged ? " row-changed" : "")
+                  (rowIndex === rowUpdated ? " row-updated" : "")
                 }
               >
                 {rowIndex}
@@ -28,7 +27,7 @@ function DPTable({dp, string, cellChanged}) {
               <td
                 className={
                   "table-header" +
-                  (rowIndex === rowChanged ? " row-changed" : "")
+                  (rowIndex === rowUpdated ? " row-updated" : "")
                 }
               >
                 {input[rowIndex]}
@@ -39,10 +38,10 @@ function DPTable({dp, string, cellChanged}) {
                   <td
                     className={
                       (cell ? "value-true" : "value-false") +
-                      (rowIndex === rowChanged && cellIndex === columnChanged
-                        ? " value-changed"
+                      (rowIndex === rowUpdated && cellIndex === columnUpdated
+                        ? " value-updated"
                         : "") +
-                      (cellIndex === columnChanged ? " column-changed" : "")
+                      (cellIndex === columnUpdated ? " column-updated" : "")
                     }
                     key={cellIndex}
                   >
@@ -58,7 +57,7 @@ function DPTable({dp, string, cellChanged}) {
   );
 }
 
-function GenerateIndexTableHeader({input, columnChanged}) {
+function GenerateIndexTableHeader({input, columnUpdated}) {
 
   const index_array = [];
   index_array.push(
@@ -75,7 +74,7 @@ function GenerateIndexTableHeader({input, columnChanged}) {
       <td
         key={"Column Header " + i}
         className={
-          "table-header" + (i === columnChanged ? " column-changed" : "")
+          "table-header" + (i === columnUpdated ? " column-updated" : "")
         }
       >
         <p>{i}</p>
@@ -86,7 +85,7 @@ function GenerateIndexTableHeader({input, columnChanged}) {
   return <tr>{index_array}</tr>;
 }
 
-function GenerateCharTableHeader({input, columnChanged}) {
+function GenerateCharTableHeader({input, columnUpdated}) {
 
   return (
     <tr>
@@ -97,7 +96,7 @@ function GenerateCharTableHeader({input, columnChanged}) {
       {input.map((cell, cellIndex) => (
         <td
           key={cell + cellIndex}
-          className={"table-header" + (cellIndex === columnChanged ? " column-changed" : "")}>
+          className={"table-header" + (cellIndex === columnUpdated ? " column-updated" : "")}>
           <p>{cell}</p>
         </td>
       ))}
